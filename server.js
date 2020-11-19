@@ -58,16 +58,13 @@ app.post("/api/notes", function (req, res) {
   console.log("***this is newNote");
   console.log(newNote);
 
-  const jsonNotesList = JSON.stringify(notesList);
+  // const jsonNotesList = `${notesList.title.toLowerCase().split(' ').join('')}.json`;
   notesList.push(newNote);
 
-  fs.writeFile("db/db.json", jsonNotesList, function (err) {
-    if (err){
-    throw err;
-    }
+  fs.writeFile("db/db.json", JSON.stringify(notesList, null, '\t'), function (err) {
+    err ? console.log(err) : console.log('Success!')
   });
 
- 
   res.json(notesList);
   const jsonParse = JSON.parse(jsonNotesList);
 });
@@ -75,10 +72,9 @@ app.post("/api/notes", function (req, res) {
 app.delete("/api/notes/:id", function(req, res){
   const remove = fs.readFileSync(path.join(__dirname, "db/db.json"));
     const found = notesList.some(note => note.id === parseInt(req.params.id));
-  
     if(found) {
-      return res.json(notesList.filter(function (note) {
-        note.id !== parseInt(req.params.id)
+      return res.json(notesList.filter(function (notesList) {
+        notesList.id !== parseInt(req.params.id)
       }));
     } else {
       res.writeHead(500, { "Content-Type": "text/html"});
