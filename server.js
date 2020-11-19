@@ -1,8 +1,6 @@
 const express = require("express");
 const fs = require("fs");
 const uuid = require("uuid");
-// const index = require('/public/assets/js/index.js');
-// console.log("anything");
 const app = express();
 const PORT = process.env.PORT || 3001;
 
@@ -20,9 +18,6 @@ const notesList = [];
 app.get("/notes", function (req, res) {
   res.sendFile(path.join(__dirname, "public/notes.html"));
 });
-
-
-
 
 //gets all notes
 app.get("/api/notes", function (req, res) {
@@ -55,7 +50,6 @@ app.get("*", function (req, res) {
 
 app.post("/api/notes", function (req, res) {
   // const write = fs.writeFile(path.join(__dirname, "db/db.json"));
-  // req.body hosts is equal to the JSON post sent from the user
   const newNote = {
     id: uuid.v4(),
     title: req.body.title,
@@ -71,17 +65,15 @@ app.post("/api/notes", function (req, res) {
     if (err){
     throw err;
     }
-    console.log("yay");
-
   });
 
-
-
+ 
   res.json(notesList);
-  
+  const jsonParse = JSON.parse(jsonNotesList);
 });
 
 app.delete("/api/notes/:id", function(req, res){
+  const remove = fs.readFileSync(path.join(__dirname, "db/db.json"));
     const found = notesList.some(note => note.id === parseInt(req.params.id));
   
     if(found) {
