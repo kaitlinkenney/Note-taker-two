@@ -78,3 +78,7 @@ You are required to submit the following:
 
 - - -
 © 2019 Trilogy Education Services, a 2U, Inc. brand. All Rights Reser
+
+link to deployed application: https://fierce-harbor-63201.herokuapp.com/
+
+screenshot: <img width="955" alt="Screenshot 2020-11-20 170543" src="https://user-images.githubusercontent.com/67657449/99854355-ad50d300-2b52-11eb-81c2-555d930f0a05.png">
