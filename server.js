@@ -3,7 +3,7 @@ const fs = require("fs");
 const uuid = require("uuid");
 const app = express();
 const PORT = process.env.PORT || 3001;
-
+const db = require("./db/db.json")
 const path = require("path");
 
 app.use(express.urlencoded({ extended: true }));
@@ -12,7 +12,7 @@ app.use(express.json());
 // app.use(express.static("public"));
 app.use(express.static(path.join(__dirname, "public")));
 
-const notesList = [];
+// const notesList = [];
 
 
 app.get("/notes", function (req, res) {
@@ -25,7 +25,6 @@ app.get("/api/notes", function (req, res) {
   const all = fs.readFileSync(path.join(__dirname, "db/db.json"));
   const notes = JSON.parse(all);
   console.log(all);
-  notesList.push(notes);
   console.log("notes going");
   return res.json(notes);
 });
@@ -59,27 +58,44 @@ app.post("/api/notes", function (req, res) {
   console.log(newNote);
 
   // const jsonNotesList = `${notesList.title.toLowerCase().split(' ').join('')}.json`;
-  notesList.push(newNote);
+  db.push(newNote);
+  // console.log(notesList)
 
-  fs.writeFile("db/db.json", JSON.stringify(notesList, null, '\t'), function (err) {
+  fs.writeFile("db/db.json", JSON.stringify(db), function (err) {
     err ? console.log(err) : console.log('Success!')
+    res.json(newNote);
   });
 
-  res.json(notesList);
-  const jsonParse = JSON.parse(jsonNotesList);
+  // const jsonParse = JSON.parse(jsonNotesList);
 });
 
 app.delete("/api/notes/:id", function(req, res){
-  const remove = fs.readFileSync(path.join(__dirname, "db/db.json"));
-    const found = notesList.some(note => note.id === parseInt(req.params.id));
-    if(found) {
-      return res.json(notesList.filter(function (notesList) {
-        notesList.id !== parseInt(req.params.id)
-      }));
-    } else {
-      res.writeHead(500, { "Content-Type": "text/html"});
-      res.end("<html><head><title>Oops</title></head><body><h1>Sorry, there was an error</h1></html>");
-    }
+  // const remove = fs.readFileSync(path.join(__dirname, "db/db.json"));
+    const found = req.params.id;
+    console.log("found");
+
+    var newNote1 = db.filter((note)=> note.id != found);
+    fs.writeFile(__dirname + "./db/db.json",
+    JSON.stringify(newNote1, null, 1),
+    (err) =>{
+
+      if (err) throw err; 
+      console.log("we did it");
+      res.send(newNote1)
+
+    })
+
+
+
+    // if(found) {
+    //   return res.json(notesList.filter(function (notesList) {
+    //     notesList.id !== parseInt(req.params.id)
+    //   }));
+    // } else {
+    //   console.log("not fancy");
+    //   res.writeHead(500, { "Content-Type": "text/html"});
+    //   res.end("<html><head><title>Oops</title></head><body><h1>Sorry, there was an error</h1></html>");
+    // }
   });
 
 
