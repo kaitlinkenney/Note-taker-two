@@ -43,6 +43,6 @@ Application should allow users to view previously saved notes.
 Application should allow users to delete previously saved notes.
 
 
-*link to deployed application: https://fierce-harbor-63201.herokuapp.com/
+* link to screencastify: https://drive.google.com/file/d/19t5VRDNJ6MUcKNNwilEpZllrmFm7HVjv/view
 
-*screenshot: <img width="955" alt="Screenshot 2020-11-20 170543" src="https://user-images.githubusercontent.com/67657449/99854355-ad50d300-2b52-11eb-81c2-555d930f0a05.png">
+* screenshot: <img width="955" alt="Screenshot 2020-11-20 170543" src="https://user-images.githubusercontent.com/67657449/99854355-ad50d300-2b52-11eb-81c2-555d930f0a05.png">
